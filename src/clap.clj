@@ -4,9 +4,12 @@
 
 (defn attrs-to-string [attrs]
   (let [aseq (seq attrs)]
-    (list " " (join (flatten (map (fn [[k v]] (list (name k) "=\"" v  "\"")) aseq))))))
+    (list " " (join " " (flatten
+                         (map (fn [[k v]]
+                                (join (list (name k) "=\"" v  "\""))) aseq))))))
   
-(attrs-to-string {:a 1 :b 2})
+(defn as-html-string [tree]
+  (join (flatten tree)))
 
 (defn make-tag [tag]
   `(defn ~(symbol (name tag))
@@ -41,7 +44,7 @@
  :html
  
  ;; :document :metadata
- :head :title :base :link :meta :style
+ :head :title :base :link :hmeta :style
 
  ;; :scripting
  :script :noscript :template
@@ -57,7 +60,7 @@
 
  ;; :text-level :semantics
  :a :em :strong :small :s :cite :q :dfn :abbr
- :data :time :code :var :samp :kbd :sub :sup
+ :data :htime :code :var :samp :kbd :sub :sup
  :i :b :u :mark :ruby :rt :rp :bdi :bdo :span
  :br :wbr
 
@@ -66,7 +69,7 @@
  
  ;; :embedded :content
  :img :iframe :embed :object :param :video
- :audio :source :track :canvas :map :area
+ :audio :source :track :canvas :hmap :area
  :svg :math
  
  ;; :tabular
